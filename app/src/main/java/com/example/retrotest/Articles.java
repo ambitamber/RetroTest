@@ -1,9 +1,14 @@
 package com.example.retrotest;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Articles {
 
+    @SerializedName("source")
+    @Expose
     private List<Source> sourceList;
     private String author;
     private String title;
