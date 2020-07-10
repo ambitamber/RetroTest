@@ -20,16 +20,16 @@ public class MainViewModel extends ViewModel {
     public LiveData<News> getNews() {
         //if the list is null
         if (newsMutableLiveData == null) {
-            newsMutableLiveData = new MutableLiveData<News>();
+            newsMutableLiveData = new MutableLiveData<>();
             //we will load it asynchronously from server in this method
-            loadHeroes();
+            loadNews();
         }
 
         //finally we will return the list
         return newsMutableLiveData;
     }
 
-    private void loadHeroes() {
+    private void loadNews() {
         ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
 
         Call<News> call = apiService.getNews();
