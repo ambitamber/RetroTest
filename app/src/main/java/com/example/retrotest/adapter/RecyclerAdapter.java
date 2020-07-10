@@ -1,4 +1,4 @@
-package com.example.retrotest;
+package com.example.retrotest.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.retrotest.R;
+import com.example.retrotest.model.Articles;
 
 import java.util.List;
 

@@ -1,19 +1,27 @@
 package com.example.retrotest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.retrotest.adapter.RecyclerAdapter;
+import com.example.retrotest.Utils.ApiClient;
+import com.example.retrotest.Utils.ApiService;
+import com.example.retrotest.model.Articles;
+import com.example.retrotest.model.News;
+import com.example.retrotest.viewmodel.MainViewModel;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements RecyclerAdapter.ClickOnItemHandler{
 
@@ -30,31 +38,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.C
 
         textView = findViewById(R.id.error_tv);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://newsapi.org/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ApiService apiService = retrofit.create(ApiService.class);
-
-        Call<News> call = apiService.getNews();
-
-        call.enqueue(new Callback<News>() {
+        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mainViewModel.getNews().observe(this, new Observer<News>() {
             @Override
-            public void onResponse(Call<News> call, Response<News> response) {
-                if (!response.isSuccessful()){
-                    textView.setText("Code" + response.code());
-                    return;
-                }
-                newsList = response.body();
-                textView.setText(newsList.getStatus());
-                articlesList = newsList.getArticlesList();
+            public void onChanged(News news) {
+                articlesList = news.getArticles();
                 createView(articlesList);
-            }
-
-            @Override
-            public void onFailure(Call<News> call, Throwable t) {
-                textView.setText(t.getMessage());
             }
         });
 

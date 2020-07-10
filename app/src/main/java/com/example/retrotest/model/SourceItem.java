@@ -1,21 +1,22 @@
-package com.example.retrotest;
+package com.example.retrotest.model;
 
-public class Source {
-    private int id;
+public class SourceItem {
+
+    private String id;
     private String name;
 
-    public int getId() {
+    //For id of the news
+    public String getId() {
         return id;
     }
-
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
+    //For the name of the source
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
