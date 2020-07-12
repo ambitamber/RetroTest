@@ -1,34 +1,12 @@
 package com.example.retrotest.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.List;
 
-public class News implements Parcelable {
+public class News {
 
     private String status;
     private int totalResults;
     private List<Articles> articles;
-
-    protected News(Parcel in) {
-        status = in.readString();
-        totalResults = in.readInt();
-    }
-
-    public static final Creator<News> CREATOR = new Creator<News>() {
-        @Override
-        public News createFromParcel(Parcel in) {
-            return new News(in);
-        }
-
-        @Override
-        public News[] newArray(int size) {
-            return new News[size];
-        }
-    };
-
-    //For api status
     public String getStatus() {
         return status;
     }
@@ -52,14 +30,4 @@ public class News implements Parcelable {
         this.articles = articles;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(status);
-        dest.writeInt(totalResults);
-    }
 }

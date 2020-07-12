@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.retrotest.R;
 import com.example.retrotest.model.Articles;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerAdapterHolder>{
-    private List<Articles> articlesList;
+    private ArrayList<Articles> articlesList;
     private ClickOnItemHandler clickOnItemHandler;
 
-    public RecyclerAdapter(List<Articles> articlesList,ClickOnItemHandler clickOnItemHandler){
+    public RecyclerAdapter(ArrayList<Articles> articlesList,ClickOnItemHandler clickOnItemHandler){
         this.articlesList = articlesList;
         this.clickOnItemHandler = clickOnItemHandler;
     }

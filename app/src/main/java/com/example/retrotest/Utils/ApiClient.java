@@ -7,21 +7,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static Retrofit retrofit;
+    private static Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("https://newsapi.org/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
-    public static Retrofit getRetrofit(){
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.level(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        if (retrofit == null){
-            retrofit = new retrofit2.Retrofit.Builder()
-                    .baseUrl("https://newsapi.org/")
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
+    public static <S> S cteateService(Class<S> serviceClass) {
+        return retrofit.create(serviceClass);
     }
 
 }

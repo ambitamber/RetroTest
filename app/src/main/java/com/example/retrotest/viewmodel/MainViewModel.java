@@ -4,46 +4,22 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.retrotest.Utils.ApiClient;
-import com.example.retrotest.Utils.ApiService;
 import com.example.retrotest.model.News;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainViewModel extends ViewModel {
 
-    private MutableLiveData<News> newsMutableLiveData;
+    private MutableLiveData<News> mutableLiveData;
+    private NewsRepository newsRepository;
 
-    //we will call this method to get the data
-    public LiveData<News> getNews() {
-        //if the list is null
-        if (newsMutableLiveData == null) {
-            newsMutableLiveData = new MutableLiveData<>();
-            //we will load it asynchronously from server in this method
-            loadNews();
+    public void init(){
+        if (mutableLiveData != null){
+            return;
         }
-
-        //finally we will return the list
-        return newsMutableLiveData;
+        newsRepository = NewsRepository.getInstance();
+        mutableLiveData = newsRepository.getNews();
     }
 
-    private void loadNews() {
-        ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
-
-        Call<News> call = apiService.getNews();
-
-        call.enqueue(new Callback<News>() {
-            @Override
-            public void onResponse(Call<News> call, Response<News> response) {
-                newsMutableLiveData.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<News> call, Throwable t) {
-
-            }
-        });
+    public LiveData<News> getNewsRepository() {
+        return mutableLiveData;
     }
 }
